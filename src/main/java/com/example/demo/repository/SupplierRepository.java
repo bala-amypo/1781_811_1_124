@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Supplier;
+import com.example.demo.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface SupplierRepository extends JpaRepository<Supplier, Long> {
-    Optional<Supplier> findByRegistrationNumber(String registrationNumber);
-    Optional<Supplier> findByEmail(String email);
+public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+    Optional<UserAccount> findByEmail(String email);
 }
