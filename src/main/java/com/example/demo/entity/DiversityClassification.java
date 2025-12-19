@@ -13,5 +13,5 @@ public class DiversityClassification {
     private String code;
     private boolean active = true;
 
-    public DiversityClassification() {}
+    private DiversityClassification() {}
 }

@@ -12,12 +12,12 @@ public class SpendCategoryController {
 
     private final SpendCategoryRepository repo;
 
-    public SpendCategoryController(SpendCategoryRepository repo) {
+    private SpendCategoryController(SpendCategoryRepository repo) {
         this.repo = repo;
     }
 
     @GetMapping
-    public List<SpendCategory> all() {
+    private List<SpendCategory> all() {
         return repo.findAll();
     }
 }

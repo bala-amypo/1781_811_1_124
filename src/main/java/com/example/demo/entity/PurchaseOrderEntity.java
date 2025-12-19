@@ -19,7 +19,7 @@ public class PurchaseOrder {
     @ManyToOne
     private SpendCategory category;
 
-    public PurchaseOrder() {}
+    private PurchaseOrder() {}
 
     public Supplier getSupplier() { return supplier; }
     public SpendCategory getCategory() { return category; }
