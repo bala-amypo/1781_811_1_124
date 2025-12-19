@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class DiversityClassificationServiceImpl
+public class DiversityClassificationServiceImpl  
         implements DiversityClassificationService {
 
     private final DiversityClassificationRepository repository;
