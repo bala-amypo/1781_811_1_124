@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.SpendCategory;
-import com.example.demo.service.SpendCategoryService;
+import com.example.demo.repository.SpendCategoryRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +10,14 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class SpendCategoryController {
 
-    private final SpendCategoryService service;
+    private final SpendCategoryRepository repo;
 
-    public SpendCategoryController(SpendCategoryService service) {
-        this.service = service;
+    public SpendCategoryController(SpendCategoryRepository repo) {
+        this.repo = repo;
     }
 
-    @PostMapping
-    public SpendCategory createCategory(@RequestBody SpendCategory category) {
-        return service.createCategory(category);
-    }
-
-    @GetMapping("/active")
-    public List<SpendCategory> getActiveCategories() {
-        return service.getActiveCategories();
+    @GetMapping
+    public List<SpendCategory> all() {
+        return repo.findAll();
     }
 }
