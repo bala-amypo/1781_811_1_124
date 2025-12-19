@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class UserAccountServiceImpl implements UserAccountService {
+private class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repository;
     private final PasswordEncoder passwordEncoder;
