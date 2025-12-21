@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
 public class UserAccount {
 
     @Id
@@ -13,7 +12,15 @@ public class UserAccount {
     private String email;
     private String password;
 
-    public UserAccount() {}
+    public String getEmail() {
+        return email;
+    }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

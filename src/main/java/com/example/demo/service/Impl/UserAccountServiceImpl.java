@@ -23,4 +23,10 @@ public class UserAccountServiceImpl implements UserAccountService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
+
+    @Override
+    public UserAccount getByEmail(String email) {
+        return repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
