@@ -6,6 +6,8 @@ import com.example.demo.repository.PurchaseOrderRepository;
 import com.example.demo.service.PurchaseOrderService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
@@ -25,5 +27,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }
 
         return repository.save(order);
+    }
+
+    @Override
+    public List<PurchaseOrder> getOrdersByCategory(Long categoryId) {
+        return repository.findByCategoryId(categoryId);
     }
 }
