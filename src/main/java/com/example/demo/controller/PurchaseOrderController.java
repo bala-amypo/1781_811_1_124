@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/purchase-orders")
+@RequestMapping("/purchase-orders")
 public class PurchaseOrderController {
 
     private final PurchaseOrderService service;
@@ -17,20 +17,12 @@ public class PurchaseOrderController {
     }
 
     @PostMapping
-    public PurchaseOrder createPurchaseOrder(
-            @RequestBody PurchaseOrder order) {
-        return service.createPurchaseOrder(order);
-    }
-
-    @GetMapping("/supplier/{supplierId}")
-    public List<PurchaseOrder> getOrdersBySupplier(
-            @PathVariable Long supplierId) {
-        return service.getOrdersBySupplier(supplierId);
+    public PurchaseOrder create(@RequestBody PurchaseOrder order) {
+        return service.create(order);
     }
 
     @GetMapping("/category/{categoryId}")
-    public List<PurchaseOrder> getOrdersByCategory(
-            @PathVariable Long categoryId) {
+    public List<PurchaseOrder> getByCategory(@PathVariable Long categoryId) {
         return service.getOrdersByCategory(categoryId);
     }
 }
