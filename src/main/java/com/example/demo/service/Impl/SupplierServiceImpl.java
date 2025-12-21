@@ -10,23 +10,33 @@ import java.util.List;
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
-    private final SupplierRepository repo;
+    private final SupplierRepository repository;
 
-    public SupplierServiceImpl(SupplierRepository repo) {
-        this.repo = repo;
+    public SupplierServiceImpl(SupplierRepository repository) {
+        this.repository = repository;
     }
 
-    public Supplier save(Supplier supplier) {
-        return repo.save(supplier);
+    @Override
+    public Supplier createSupplier(Supplier supplier) {
+        supplier.setActive(true);
+        return repository.save(supplier);
     }
 
-    public List<Supplier> findAll() {
-        return repo.findAll();
+    @Override
+    public List<Supplier> getAllSuppliers() {
+        return repository.findAll();
     }
 
-    public Supplier deactivate(Long id) {
-        Supplier s = repo.findById(id).orElseThrow();
-        s.setActive(false);
-        return repo.save(s);
+    @Override
+    public Supplier getSupplier(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Supplier not found"));
+    }
+
+    @Override
+    public void deactivateSupplier(Long id) {
+        Supplier supplier = getSupplier(id);
+        supplier.setActive(false);
+        repository.save(supplier);
     }
 }
