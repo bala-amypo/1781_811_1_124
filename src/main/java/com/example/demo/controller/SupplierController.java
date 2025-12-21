@@ -2,12 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Supplier;
 import com.example.demo.service.SupplierService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/suppliers")
+@RequestMapping("/suppliers")
 public class SupplierController {
 
     private final SupplierService service;
@@ -32,7 +33,8 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}/deactivate")
-    public Supplier deactivateSupplier(@PathVariable Long id) {
-        return service.deactivateSupplier(id);
+    public ResponseEntity<Void> deactivateSupplier(@PathVariable Long id) {
+        service.deactivateSupplier(id);
+        return ResponseEntity.noContent().build();
     }
 }
