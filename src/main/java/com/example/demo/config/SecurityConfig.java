@@ -17,15 +17,17 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                // 🔓 allow EVERYTHING
+                .anyRequest().permitAll()
             )
-            .httpBasic(); // or remove if using JWT
+            // ❌ disable all default login mechanisms
+            .httpBasic(httpBasic -> httpBasic.disable())
+            .formLogin(form -> form.disable());
 
         return http.build();
     }
 
-    // ✅ PasswordEncoder BEAN (fixes your error)
+    // Keep encoder for your service
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
