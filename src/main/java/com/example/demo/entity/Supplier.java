@@ -1,27 +1,25 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "suppliers")
 public class Supplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String registrationNumber;
-    private String email;
-    private boolean active = true;
+    private Boolean active;
 
-    @OneToMany(mappedBy = "supplier")
-    private List<PurchaseOrder> orders;
+    public Long getId() {
+        return id;
+    }
 
-    public Supplier() {}
+    public Boolean getActive() {
+        return active;
+    }
 
-    public Long getId() { return id; }
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
