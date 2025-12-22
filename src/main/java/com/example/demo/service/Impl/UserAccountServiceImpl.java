@@ -10,17 +10,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repository;
 
-    public UserAccountServiceImpl(UserAccountRepository repository,
-                        ) {
+    public UserAccountServiceImpl(UserAccountRepository repository) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
-    public UserAccount register(UserAccount user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return repository.save(user);
-    }
+   
 
     @Override
     public UserAccount getByEmail(String email) {
