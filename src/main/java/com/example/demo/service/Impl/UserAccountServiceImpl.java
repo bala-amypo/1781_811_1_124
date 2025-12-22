@@ -15,7 +15,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccountServiceImpl(UserAccountRepository repository,
                                   PasswordEncoder passwordEncoder) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
