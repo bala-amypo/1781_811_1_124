@@ -10,12 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repository;
-    private final PasswordEncoder passwordEncoder;
-
-    public UserAccountServiceImpl(UserAccountRepository repository,
-                                  PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-    }
+    
 
     @Override
     public UserAccount register(UserAccount user) {
