@@ -5,9 +5,16 @@ import com.example.demo.service.*;
 import com.example.demo.service.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class AppConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SupplierService supplierService(SupplierRepository repo) {
@@ -41,7 +48,8 @@ public class AppConfig {
 
     @Bean
     public UserAccountService userAccountService(
-            UserAccountRepository repo) {
-        return new UserAccountServiceImpl(repo);
+            UserAccountRepository repo,
+            PasswordEncoder passwordEncoder) {
+        return new UserAccountServiceImpl(repo, passwordEncoder);
     }
 }
