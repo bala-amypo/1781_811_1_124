@@ -15,21 +15,26 @@ public class SupplierServiceImpl implements SupplierService {
         this.repo = repo;
     }
 
-    public Supplier createSupplier(Supplier s) {
-        return repo.save(s);
+    @Override
+    public Supplier createSupplier(Supplier supplier) {
+        return repo.save(supplier);
     }
 
-    public Supplier getSupplierById(Long id) {
+    @Override
+    public Supplier getSupplier(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Supplier not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Supplier not found"));
     }
 
+    @Override
     public List<Supplier> getAllSuppliers() {
         return repo.findAll();
     }
 
+    @Override
     public void deactivateSupplier(Long id) {
-        Supplier s = getSupplierById(id);
+        Supplier s = getSupplier(id);
         s.setIsActive(false);
         repo.save(s);
     }
