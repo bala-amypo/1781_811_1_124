@@ -20,7 +20,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccount register(UserAccount user) {
-        if (repo.existsByEmail(user.getEmail())) {
+        if (repo.findByEmail(user.getEmail()).isPresent()) {
             throw new BadRequestException("Email already exists");
         }
         user.setPassword(encoder.encode(user.getPassword()));
@@ -28,7 +28,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount findByEmailOrThrow(String email) {
+    public UserAccount getByEmail(String email) {
         return repo.findByEmail(email)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found"));
