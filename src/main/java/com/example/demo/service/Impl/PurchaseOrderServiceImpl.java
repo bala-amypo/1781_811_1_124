@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // <- This is crucial
+@Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private final PurchaseOrderRepository poRepo;
@@ -24,5 +24,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public List<PurchaseOrder> getOrdersByCategory(Long categoryId) {
         return poRepo.findByCategory_Id(categoryId);
+    }
+
+    @Override
+    public List<PurchaseOrder> getOrdersBySupplier(Long supplierId) {
+        return poRepo.findBySupplier_Id(supplierId);
     }
 }

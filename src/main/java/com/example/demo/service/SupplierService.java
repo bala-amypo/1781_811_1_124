@@ -7,9 +7,11 @@ public interface SupplierService {
 
     Supplier createSupplier(Supplier supplier);
 
-    Supplier getSupplier(Long id);   // ✅ REQUIRED BY CONTROLLER
+    Supplier getSupplier(Long id);
 
     List<Supplier> getAllSuppliers();
 
-    void deactivateSupplier(Long id);
+    Supplier updateSupplier(Long id, Supplier supplier);
+
+    void deleteSupplier(Long id);
 }
