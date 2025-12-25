@@ -44,10 +44,7 @@ public class SupplierServiceImpl implements SupplierService {
     public Supplier updateSupplier(Long id, Supplier updatedSupplier) {
         Supplier existingSupplier = getSupplier(id);
         existingSupplier.setName(updatedSupplier.getName());
-        existingSupplier.setEmail(updatedSupplier.getEmail());
-        existingSupplier.setPhone(updatedSupplier.getPhone());
-        existingSupplier.setAddress(updatedSupplier.getAddress());
-        // keep isActive as is unless you explicitly change it
+        // Add other fields here ONLY if they exist in your entity
         return supplierRepo.save(existingSupplier);
     }
 
