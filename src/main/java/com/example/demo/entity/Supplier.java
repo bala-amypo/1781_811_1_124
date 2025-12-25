@@ -1,25 +1,31 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Supplier {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
-    private Boolean active;
+    private String name;
+    private String email;
+    private String registrationNumber;
+    private Boolean isActive;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    public Long getId() {
-        return id;
+    @ManyToMany
+    private Set<DiversityClassification> diversityClassifications = new HashSet<>();
+
+    @PrePersist
+    public void prePersist() {
+        if (isActive == null) isActive = true;
+        createdAt = LocalDateTime.now();
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    
 }
