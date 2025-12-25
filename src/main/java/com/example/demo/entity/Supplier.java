@@ -27,5 +27,14 @@ public class Supplier {
         createdAt = LocalDateTime.now();
     }
 
-    
+    public Long getId() { return id; }
+    public Boolean getIsActive() { return isActive; }
+    public Set<DiversityClassification> getDiversityClassifications() { return diversityClassifications; }
+    public String getName() { return name; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setIsActive(Boolean active) { this.isActive = active; }
+    public void setName(String name) { this.name = name; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }

@@ -1,7 +1,6 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
-import java.util.Date;
+import java.util.Base64;
 
 public class JwtUtil {
 
@@ -14,39 +13,32 @@ public class JwtUtil {
     }
 
     public String generateToken(Long userId, String email, String role) {
-        return Jwts.builder()
-                .claim("userId", userId)
-                .claim("role", role)
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
+        String raw = userId + "|" + email + "|" + role;
+        return Base64.getEncoder().encodeToString(raw.getBytes());
     }
 
     public String extractEmail(String token) {
-        return parse(token).getSubject();
+        return decode(token)[1];
     }
 
     public String extractRole(String token) {
-        return (String) parse(token).get("role");
+        return decode(token)[2];
     }
 
     public Long extractUserId(String token) {
-        return ((Number) parse(token).get("userId")).longValue();
+        return Long.parseLong(decode(token)[0]);
     }
 
     public boolean validateToken(String token) {
         try {
-            parse(token);
+            decode(token);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    private Claims parse(String token) {
-        return Jwts.parser().setSigningKey(secret)
-                .parseClaimsJws(token).getBody();
+    private String[] decode(String token) {
+        return new String(Base64.getDecoder().decode(token)).split("\\|");
     }
 }

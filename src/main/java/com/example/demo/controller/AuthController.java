@@ -7,7 +7,6 @@ import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
-import org.springframework.security.core.Authentication;
 
 public class AuthController {
 
@@ -25,27 +24,31 @@ public class AuthController {
 
     public ResponseEntity<JwtResponse> register(RegisterRequest req) {
         UserAccount u = new UserAccount();
-        u.setEmail(req.getEmail());
         u.setFullName(req.getFullName());
+        u.setEmail(req.getEmail());
         u.setPassword(req.getPassword());
         u.setRole(req.getRole());
 
         UserAccount saved = service.register(u);
-        String token = jwtUtil.generateToken(saved.getId(), saved.getEmail(), saved.getRole());
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(
+                new JwtResponse(jwtUtil.generateToken(
+                        saved.getId(), saved.getEmail(), saved.getRole()))
+        );
     }
 
     public ResponseEntity<JwtResponse> login(LoginRequest req) {
         try {
-            Authentication auth = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
-            );
+            authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            req.getEmail(), req.getPassword()));
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Invalid credentials");
         }
 
         UserAccount u = service.findByEmailOrThrow(req.getEmail());
-        String token = jwtUtil.generateToken(u.getId(), u.getEmail(), u.getRole());
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(
+                new JwtResponse(jwtUtil.generateToken(
+                        u.getId(), u.getEmail(), u.getRole()))
+        );
     }
 }

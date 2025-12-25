@@ -16,5 +16,11 @@ public class SpendCategory {
         if (active == null) active = true;
     }
 
-    
+    public Long getId() { return id; }
+    public Boolean getActive() { return active; }
+    public String getName() { return name; }
+
+    public void setId(Long id) { this.id = id; }
+    public void setActive(Boolean active) { this.active = active; }
+    public void setName(String name) { this.name = name; }
 }
