@@ -3,16 +3,22 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "diversity_targets")
 public class DiversityTarget {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
-    private int year;
-    private double percentage;
-    private boolean active = true;
+    private Integer targetYear;
+    private Double targetPercentage;
+    private Boolean active;
 
-    public DiversityTarget() {}
+    @ManyToOne
+    private DiversityClassification classification;
+
+    @PrePersist
+    public void preSave() {
+        if (active == null) active = true;
+    }
+
+    
 }

@@ -3,15 +3,19 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "diversity_classifications")
 public class DiversityClassification {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     private String code;
-    private boolean active = true;
+    private Boolean active;
 
-    private DiversityClassification() {}
+    @PrePersist
+    public void preSave() {
+        if (active == null) active = true;
+        if (code != null) code = code.toUpperCase();
+    }
+
+    
 }

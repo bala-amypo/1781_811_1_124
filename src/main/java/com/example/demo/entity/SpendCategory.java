@@ -5,17 +5,16 @@ import jakarta.persistence.*;
 @Entity
 public class SpendCategory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
+    private String name;
     private Boolean active;
 
-    public Long getId() {
-        return id;
+    @PrePersist
+    public void preSave() {
+        if (active == null) active = true;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
+    
 }
