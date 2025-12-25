@@ -3,31 +3,40 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.DiversityClassification;
 import com.example.demo.repository.DiversityClassificationRepository;
 import com.example.demo.service.DiversityClassificationService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Transactional
-public class DiversityClassificationServiceImpl  
+public class DiversityClassificationServiceImpl
         implements DiversityClassificationService {
 
-    private final DiversityClassificationRepository repository;
+    private final DiversityClassificationRepository repo;
 
     public DiversityClassificationServiceImpl(
-            DiversityClassificationRepository repository) {
-        this.repository = repository;
+            DiversityClassificationRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public DiversityClassification createClassification(
-            DiversityClassification classification) {
-        return repository.save(classification);
+    public List<DiversityClassification> getAll() {
+        return repo.findAll();
+    }
+
+    @Override
+    public DiversityClassification getById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("DiversityClassification not found"));
     }
 
     @Override
     public List<DiversityClassification> getActiveClassifications() {
-        return repository.findByActiveTrue();
+        return repo.findByActiveTrue();
+    }
+
+    @Override
+    public DiversityClassification create(DiversityClassification dc) {
+        return repo.save(dc);
     }
 }
