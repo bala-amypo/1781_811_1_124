@@ -14,4 +14,7 @@ public interface SupplierService {
     Supplier updateSupplier(Long id, Supplier supplier);
 
     void deleteSupplier(Long id);
+
+    // Add this method
+    Supplier deactivateSupplier(Long id);
 }
