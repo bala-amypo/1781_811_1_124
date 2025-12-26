@@ -26,8 +26,6 @@ public class DiversityTarget {
         this.active = true;
     }
 
-    // ---------- Getters & Setters ----------
-
     public Long getId() {
         return id;
     }
