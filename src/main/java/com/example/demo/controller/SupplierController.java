@@ -1,33 +1,46 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Supplier;
-import com.example.demo.service.SupplierService;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.demo.entity.Supplier;
+import com.example.demo.service.SupplierService;
 
 @RestController
 @RequestMapping("/suppliers")
 public class SupplierController {
 
-    private final SupplierService service;
+    @Autowired
+    private SupplierService supplierService;
 
-    public SupplierController(SupplierService service) {
-        this.service = service;
+    /* ===== Constructor REQUIRED by tests ===== */
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
     }
 
+    /* Spring default */
+    public SupplierController() {}
+
     @PostMapping
-    public Supplier createSupplier(@RequestBody Supplier supplier) {
-        return service.createSupplier(supplier);
+    public ResponseEntity<Supplier> createSupplier(
+            @RequestBody Supplier supplier) {
+        return ResponseEntity.ok(
+                supplierService.createSupplier(supplier));
     }
 
     @GetMapping
-    public List<Supplier> getAllSuppliers() {
-        return service.getAllSuppliers();
+    public ResponseEntity<List<Supplier>> getAllSuppliers() {
+        return ResponseEntity.ok(
+                supplierService.getAllSuppliers());
     }
 
     @GetMapping("/{id}")
-    public Supplier getSupplier(@PathVariable Long id) {
-        return service.getSupplier(id);
+    public ResponseEntity<Supplier> getSupplier(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(
+                supplierService.getSupplierById(id));
     }
 }

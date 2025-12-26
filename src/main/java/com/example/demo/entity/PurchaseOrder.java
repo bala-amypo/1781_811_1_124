@@ -5,31 +5,87 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "purchase_orders")
 public class PurchaseOrder {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String poNumber;
+
+    @Column(nullable = false)
     private BigDecimal amount;
+
+    @Column(nullable = false)
     private LocalDate dateIssued;
 
-    @ManyToOne
-    private SpendCategory category;
+    private String notes;
 
     @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = false)
     private Supplier supplier;
 
-    public PurchaseOrder() {}
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private SpendCategory category;
 
-    public void setPoNumber(String poNumber) { this.poNumber = poNumber; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
-    public void setDateIssued(LocalDate dateIssued) { this.dateIssued = dateIssued; }
-    public void setCategory(SpendCategory category) { this.category = category; }
+    // ---------- Getters & Setters ----------
 
-    public String getPoNumber() { return poNumber; }
-    public BigDecimal getAmount() { return amount; }
-    public LocalDate getDateIssued() { return dateIssued; }
-    public SpendCategory getCategory() { return category; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getPoNumber() {
+        return poNumber;
+    }
+
+    public void setPoNumber(String poNumber) {
+        this.poNumber = poNumber;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public LocalDate getDateIssued() {
+        return dateIssued;
+    }
+
+    public void setDateIssued(LocalDate dateIssued) {
+        this.dateIssued = dateIssued;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public SpendCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(SpendCategory category) {
+        this.category = category;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }
