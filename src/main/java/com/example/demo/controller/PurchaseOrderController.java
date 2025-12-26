@@ -17,12 +17,12 @@ public class PurchaseOrderController {
     }
 
     @PostMapping
-    public PurchaseOrder create(@RequestBody PurchaseOrder order) {
-        return service.create(order);
+    public PurchaseOrder create(@RequestBody PurchaseOrder purchaseOrder) {
+        return service.createPurchaseOrder(purchaseOrder);
     }
 
-    @GetMapping("/category/{categoryId}")
-    public List<PurchaseOrder> getByCategory(@PathVariable Long categoryId) {
-        return service.getOrdersByCategory(categoryId);
+    @GetMapping("/supplier/{supplierId}")
+    public List<PurchaseOrder> getBySupplier(@PathVariable Long supplierId) {
+        return service.getPurchaseOrdersBySupplier(supplierId);
     }
 }

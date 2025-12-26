@@ -7,28 +7,34 @@ import com.example.demo.entity.UserAccount;
 import com.example.demo.exception.UnauthorizedException;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserAccountService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
-    private final UserAccountService service;
+    private final UserAccountService userAccountService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public AuthController(
-            UserAccountService service,
-            AuthenticationManager authenticationManager,
-            JwtUtil jwtUtil) {
-        this.service = service;
+    public AuthController(UserAccountService userAccountService,
+                          AuthenticationManager authenticationManager,
+                          JwtUtil jwtUtil) {
+        this.userAccountService = userAccountService;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
 
-    // ---------------- REGISTER ----------------
-    public ResponseEntity<JwtResponse> register(RegisterRequest request) {
+    // =========================
+    // REGISTER
+    // =========================
+    @PostMapping("/register")
+    public ResponseEntity<JwtResponse> register(
+            @RequestBody RegisterRequest request) {
 
         UserAccount user = new UserAccount();
         user.setFullName(request.getFullName());
@@ -36,19 +42,24 @@ public class AuthController {
         user.setPassword(request.getPassword());
         user.setRole(request.getRole());
 
-        UserAccount saved = service.register(user);
+        UserAccount savedUser = userAccountService.register(user);
 
         String token = jwtUtil.generateToken(
-                saved.getId(),
-                saved.getEmail(),
-                saved.getRole()
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getRole()
         );
 
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    // ---------------- LOGIN ----------------
-    public ResponseEntity<JwtResponse> login(LoginRequest request) {
+    // =========================
+    // LOGIN
+    // =========================
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponse> login(
+            @RequestBody LoginRequest request) {
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -56,11 +67,13 @@ public class AuthController {
                             request.getPassword()
                     )
             );
-        } catch (BadCredentialsException ex) {
-            throw new UnauthorizedException("Invalid credentials");
+        } catch (Exception ex) {
+            // ❌ Wrong credentials → 401 (not 500)
+            throw new UnauthorizedException("Invalid email or password");
         }
 
-        UserAccount user = service.getByEmail(request.getEmail());
+        UserAccount user =
+                userAccountService.findByEmailOrThrow(request.getEmail());
 
         String token = jwtUtil.generateToken(
                 user.getId(),
