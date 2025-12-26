@@ -1,13 +1,12 @@
 package com.example.demo;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.testng.annotations.Test;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
-public class DemoApplicationTests {
+@SpringBootApplication
+public class DemoApplication {
 
-    @Test
-    void contextLoads() {
-        // This test passes if Spring Boot starts correctly
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
     }
 }
