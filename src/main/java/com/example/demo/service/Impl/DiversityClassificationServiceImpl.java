@@ -1,43 +1,42 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.DiversityTarget;
-import com.example.demo.repository.DiversityTargetRepository;
-import com.example.demo.service.DiversityTargetService;
+import com.example.demo.entity.DiversityClassification;
+import com.example.demo.repository.DiversityClassificationRepository;
+import com.example.demo.service.DiversityClassificationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class DiversityTargetServiceImpl implements DiversityTargetService {
+public class DiversityClassificationServiceImpl implements DiversityClassificationService {
 
-    private final DiversityTargetRepository repo;
+    private final DiversityClassificationRepository repo;
 
-    public DiversityTargetServiceImpl(DiversityTargetRepository repo) {
+    public DiversityClassificationServiceImpl(DiversityClassificationRepository repo) {
         this.repo = repo;
     }
 
     @Override
-    public DiversityTarget createTarget(DiversityTarget target) {
-        return repo.save(target);
+    public DiversityClassification create(DiversityClassification classification) {
+        return repo.save(classification);
     }
 
     @Override
-    public List<DiversityTarget> getTargetsByYear(int year) {
-        return repo.findByTargetYear(year);
-    }
-
-    @Override
-    public List<DiversityTarget> getAllTargets() {
+    public List<DiversityClassification> getAll() {
         return repo.findAll();
     }
 
     @Override
-    public DiversityTarget deactivateTarget(Long id) {
-        DiversityTarget target = repo.findById(id).orElse(null);
-        if (target != null) {
-            target.setActive(false);
-            return repo.save(target);
-        }
-        return null;
+    public List<DiversityClassification> getActiveClassifications() {
+        return repo.findAll()
+                .stream()
+                .filter(DiversityClassification::getActive)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 }
