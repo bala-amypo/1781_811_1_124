@@ -5,6 +5,8 @@ import com.example.demo.repository.SupplierRepository;
 import com.example.demo.service.SupplierService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
@@ -12,6 +14,27 @@ public class SupplierServiceImpl implements SupplierService {
 
     public SupplierServiceImpl(SupplierRepository repo) {
         this.repo = repo;
+    }
+
+    @Override
+    public Supplier createSupplier(Supplier supplier) {
+        return repo.save(supplier);
+    }
+
+    @Override
+    public List<Supplier> getAllSuppliers() {
+        return repo.findAll();
+    }
+
+    @Override
+    public Supplier getSupplier(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    @Override
+    public Supplier updateSupplier(Long id, Supplier supplier) {
+        supplier.setId(id);
+        return repo.save(supplier);
     }
 
     @Override
