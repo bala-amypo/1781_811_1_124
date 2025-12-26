@@ -25,23 +25,17 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
+    public Supplier getSupplier(Long id) {
+        return supplierRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<Supplier> getAllSuppliers() {
         return supplierRepository.findAll();
     }
 
     @Override
-    public Supplier getSupplier(Long id) {
-        Optional<Supplier> optionalSupplier = supplierRepository.findById(id);
-        return optionalSupplier.orElseThrow(() -> 
-            new RuntimeException("Supplier not found with id: " + id)
-        );
-    }
-
-    @Override
     public Supplier updateSupplier(Supplier supplier) {
-        if (supplier.getId() == null) {
-            throw new IllegalArgumentException("Supplier ID cannot be null for update.");
-        }
         return supplierRepository.save(supplier);
     }
 

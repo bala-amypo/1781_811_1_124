@@ -3,50 +3,30 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.DiversityTarget;
 import com.example.demo.repository.DiversityTargetRepository;
 import com.example.demo.service.DiversityTargetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DiversityTargetServiceImpl implements DiversityTargetService {
 
-    private final DiversityTargetRepository repo;
+    private final DiversityTargetRepository repository;
 
-    public DiversityTargetServiceImpl(DiversityTargetRepository repo) {
-        this.repo = repo;
-    }
-
-    @Override
-    public DiversityTarget createTarget(DiversityTarget target) {
-        return repo.save(target);
-    }
-
-    @Override
-    public List<DiversityTarget> getTargetsByYear(int year) {
-        return repo.findByTargetYear(year);
+    @Autowired
+    public DiversityTargetServiceImpl(DiversityTargetRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<DiversityTarget> getAllTargets() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     @Override
-    public List<DiversityTarget> getActiveTargets() {
-        return repo.findAll()
-                .stream()
-                .filter(DiversityTarget::getActive)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public DiversityTarget deactivateTarget(Long id) {
-        DiversityTarget target = repo.findById(id).orElse(null);
-        if (target != null) {
-            target.setActive(false);
-            return repo.save(target);
-        }
-        return null;
+    public void deactivateTarget(Long id) {
+        DiversityTarget target = repository.findById(id).orElseThrow();
+        target.setActive(false);
+        repository.save(target);
     }
 }

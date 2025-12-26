@@ -1,21 +1,25 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class DiversityClassification {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean isActive = true;
-    private LocalDateTime createdAt;
+    private String name;
 
-    public DiversityClassification() {}
+    private boolean active = true;
 
-    public void preSave() {
-        createdAt = LocalDateTime.now();
-    }
+    // Getter & Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public boolean getActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }
