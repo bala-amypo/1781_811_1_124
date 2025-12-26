@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiversityClassificationServiceImpl implements DiversityClassificationService {
@@ -19,14 +20,28 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
     }
 
     @Override
+    public DiversityClassification createClassification(DiversityClassification classification) {
+        return repository.save(classification);
+    }
+
+    @Override
+    public List<DiversityClassification> getActiveClassifications() {
+        return repository.findAll()
+                .stream()
+                .filter(DiversityClassification::isActive)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<DiversityClassification> getAllClassifications() {
         return repository.findAll();
     }
 
     @Override
-    public void deactivateClassification(Long id) {
-        DiversityClassification classification = repository.findById(id).orElseThrow();
-        classification.setActive(false);
-        repository.save(classification);
+    public DiversityClassification deleteClassification(Long id) {
+        DiversityClassification classification = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Classification not found"));
+        repository.delete(classification);
+        return classification;
     }
 }

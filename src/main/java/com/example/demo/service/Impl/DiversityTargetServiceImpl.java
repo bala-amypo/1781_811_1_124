@@ -24,9 +24,10 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
     }
 
     @Override
-    public void deactivateTarget(Long id) {
-        DiversityTarget target = repository.findById(id).orElseThrow();
+    public DiversityTarget deactivateTarget(Long id) {
+        DiversityTarget target = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Target not found"));
         target.setActive(false);
-        repository.save(target);
+        return repository.save(target); // return the updated entity
     }
 }
