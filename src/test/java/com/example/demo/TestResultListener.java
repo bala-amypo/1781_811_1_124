@@ -1,22 +1,9 @@
-package com.example.demo;
- 
-import org.testng.ITestListener;
-import org.testng.ITestResult;
- 
-public class TestResultListener implements ITestListener {
- 
-    @Override
-    public void onTestSuccess(ITestResult result) {
-        System.out.println(result.getMethod().getMethodName() + " - PASS");
-    }
- 
-    @Override
-    public void onTestFailure(ITestResult result) {
-        System.out.println(result.getMethod().getMethodName() + " - FAIL");
-    }
- 
-    @Override
-    public void onTestSkipped(ITestResult result) {
-        System.out.println(result.getMethod().getMethodName() + " - SKIP");
-    }
-}
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Demo Test Suite">
+    <test name="Spring Boot Context Test">
+        <classes>
+            <class name="com.example.demo.DemoApplicationTests"/>
+        </classes>
+    </test>
+</suite>
