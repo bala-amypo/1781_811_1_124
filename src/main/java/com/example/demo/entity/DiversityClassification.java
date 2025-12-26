@@ -1,11 +1,6 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "diversity_classifications")
@@ -15,35 +10,20 @@ public class DiversityClassification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
+    @Column(nullable = false, unique = true)
     private String code;
 
-    public DiversityClassification() {
-    }
+    private String description;
 
-    /* ===============================
-       Required by TestNG
-       =============================== */
+    @Column(nullable = false)
+    private Boolean active;
 
     @PrePersist
     public void preSave() {
-        if (this.code == null && this.name != null) {
-            this.code = this.name.toUpperCase().replace(" ", "_");
-        }
+        this.active = true;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /* ===============================
-       Standard getters/setters
-       =============================== */
+    // ---------- Getters & Setters ----------
 
     public Long getId() {
         return id;
@@ -53,11 +33,27 @@ public class DiversityClassification {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code != null ? code.toUpperCase() : null;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

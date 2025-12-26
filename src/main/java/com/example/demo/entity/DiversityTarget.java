@@ -1,12 +1,6 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "diversity_targets")
@@ -16,41 +10,50 @@ public class DiversityTarget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int targetYear;
+    private Integer targetYear;
 
-    private double targetPercentage;
+    private Double targetPercentage;
+
+    @Column(nullable = false)
+    private Boolean active;
 
     @ManyToOne
+    @JoinColumn(name = "classification_id", nullable = false)
     private DiversityClassification classification;
-
-    public DiversityTarget() {
-    }
-
-    /* ===============================
-       Required by TestNG
-       =============================== */
 
     @PrePersist
     public void preSave() {
-        if (targetPercentage < 0) {
-            targetPercentage = 0;
-        }
+        this.active = true;
     }
 
-    public int getTargetYear() {
+    // ---------- Getters & Setters ----------
+
+    public Long getId() {
+        return id;
+    }
+
+    public Integer getTargetYear() {
         return targetYear;
     }
 
-    public void setTargetYear(int targetYear) {
+    public void setTargetYear(Integer targetYear) {
         this.targetYear = targetYear;
     }
 
-    public double getTargetPercentage() {
+    public Double getTargetPercentage() {
         return targetPercentage;
     }
 
-    public void setTargetPercentage(double targetPercentage) {
+    public void setTargetPercentage(Double targetPercentage) {
         this.targetPercentage = targetPercentage;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public DiversityClassification getClassification() {
@@ -59,14 +62,6 @@ public class DiversityTarget {
 
     public void setClassification(DiversityClassification classification) {
         this.classification = classification;
-    }
-
-    /* ===============================
-       Standard getters/setters
-       =============================== */
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {
