@@ -7,5 +7,11 @@ public interface DiversityTargetService {
 
     DiversityTarget createTarget(DiversityTarget target);
 
+    List<DiversityTarget> getTargetsByYear(int year);
+
+    List<DiversityTarget> getAllTargets();
+
     List<DiversityTarget> getActiveTargets();
+
+    DiversityTarget deactivateTarget(Long id);
 }

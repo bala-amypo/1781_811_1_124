@@ -6,6 +6,7 @@ import com.example.demo.service.DiversityTargetService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiversityTargetServiceImpl implements DiversityTargetService {
@@ -29,6 +30,14 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
     @Override
     public List<DiversityTarget> getAllTargets() {
         return repo.findAll();
+    }
+
+    @Override
+    public List<DiversityTarget> getActiveTargets() {
+        return repo.findAll()
+                .stream()
+                .filter(DiversityTarget::getActive)
+                .collect(Collectors.toList());
     }
 
     @Override

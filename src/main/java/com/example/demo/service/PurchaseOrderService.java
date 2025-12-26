@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface PurchaseOrderService {
 
-    PurchaseOrder create(PurchaseOrder po);
-
-    List<PurchaseOrder> getOrdersByCategory(Long categoryId);
+    PurchaseOrder create(PurchaseOrder order);
 
     List<PurchaseOrder> getOrdersBySupplier(Long supplierId);
+
+    List<PurchaseOrder> getOrdersByCategory(Long categoryId);
 }

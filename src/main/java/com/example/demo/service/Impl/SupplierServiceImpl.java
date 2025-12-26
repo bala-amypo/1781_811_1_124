@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.Supplier;
 import com.example.demo.repository.SupplierRepository;
 import com.example.demo.service.SupplierService;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,17 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
+    public Supplier deactivateSupplier(Long id) {
+        Supplier supplier = repo.findById(id).orElse(null);
+        if (supplier != null) {
+            supplier.setActive(false);
+            return repo.save(supplier);
+        }
+        return null;
+    }
+
+    @Override
     public void deleteSupplier(Long id) {
         repo.deleteById(id);
     }
 }
-    

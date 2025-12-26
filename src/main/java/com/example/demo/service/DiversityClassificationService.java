@@ -5,8 +5,11 @@ import java.util.List;
 
 public interface DiversityClassificationService {
 
-    DiversityClassification createClassification(
-            DiversityClassification classification);
+    DiversityClassification createClassification(DiversityClassification classification);
+
+    List<DiversityClassification> getAllClassifications();
 
     List<DiversityClassification> getActiveClassifications();
+
+    void deleteClassification(Long id);
 }

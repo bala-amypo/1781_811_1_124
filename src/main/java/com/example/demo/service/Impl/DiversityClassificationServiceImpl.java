@@ -18,12 +18,12 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
     }
 
     @Override
-    public DiversityClassification create(DiversityClassification classification) {
+    public DiversityClassification createClassification(DiversityClassification classification) {
         return repo.save(classification);
     }
 
     @Override
-    public List<DiversityClassification> getAll() {
+    public List<DiversityClassification> getAllClassifications() {
         return repo.findAll();
     }
 
@@ -36,7 +36,7 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteClassification(Long id) {
         repo.deleteById(id);
     }
 }
