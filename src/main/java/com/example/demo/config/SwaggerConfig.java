@@ -15,7 +15,6 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
 
         return new OpenAPI()
-                // ⚠️ Server URL NOT CHANGED as requested
                 .servers(List.of(
                         new Server()
                                 .url("https://9374.pro604cr.amypo.ai/")
