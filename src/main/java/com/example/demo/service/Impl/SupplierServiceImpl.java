@@ -14,7 +14,18 @@ public class SupplierServiceImpl implements SupplierService {
         this.repo = repo;
     }
 
-    public Supplier getSupplierById(long id) {
+    @Override
+    public Supplier getSupplierById(Long id) {
         return repo.findById(id).orElse(null);
+    }
+
+    @Override
+    public Supplier deactivateSupplier(Long id) {
+        Supplier supplier = repo.findById(id).orElse(null);
+        if (supplier != null) {
+            supplier.setActive(false);
+            return repo.save(supplier);
+        }
+        return null;
     }
 }
