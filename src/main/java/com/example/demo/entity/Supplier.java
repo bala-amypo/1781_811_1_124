@@ -2,39 +2,36 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Supplier {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String email;
     private String registrationNumber;
-    private Boolean isActive;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @ManyToMany
-    private Set<DiversityClassification> diversityClassifications = new HashSet<>();
-
-    @PrePersist
-    public void prePersist() {
-        if (isActive == null) isActive = true;
-        createdAt = LocalDateTime.now();
-    }
+    private Boolean isActive = true;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() { return id; }
-    public Boolean getIsActive() { return isActive; }
-    public Set<DiversityClassification> getDiversityClassifications() { return diversityClassifications; }
-    public String getName() { return name; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-
     public void setId(Long id) { this.id = id; }
-    public void setIsActive(Boolean active) { this.isActive = active; }
+
+    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getRegistrationNumber() { return registrationNumber; }
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
+    public Boolean getActive() { return isActive; }
+    public void setActive(Boolean active) { isActive = active; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

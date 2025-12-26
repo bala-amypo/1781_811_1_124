@@ -5,20 +5,36 @@ import jakarta.persistence.*;
 @Entity
 public class DiversityTarget {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer targetYear;
-    private Double targetPercentage;
-    private Boolean active;
+    private int targetYear;
+    private double targetPercentage;
+    private Boolean isActive = true;
 
     @ManyToOne
     private DiversityClassification classification;
 
-    @PrePersist
-    public void preSave() {
-        if (active == null) active = true;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public int getTargetYear() { return targetYear; }
+    public void setTargetYear(int targetYear) { this.targetYear = targetYear; }
+
+    public double getTargetPercentage() { return targetPercentage; }
+    public void setTargetPercentage(double targetPercentage) {
+        this.targetPercentage = targetPercentage;
     }
 
-    
+    public DiversityClassification getClassification() {
+        return classification;
+    }
+
+    public void setClassification(DiversityClassification classification) {
+        this.classification = classification;
+    }
+
+    public Boolean getActive() { return isActive; }
+    public void setActive(Boolean active) { isActive = active; }
 }
