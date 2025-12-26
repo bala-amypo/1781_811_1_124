@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.PurchaseOrder;
 import java.util.List;
+import com.example.demo.entity.PurchaseOrder;
 
 public interface PurchaseOrderService {
 
-    PurchaseOrder create(PurchaseOrder po); // renamed to match controller
+    PurchaseOrder createPurchaseOrder(PurchaseOrder purchaseOrder);
 
-    List<PurchaseOrder> getOrdersByCategory(Long categoryId);
-
-    List<PurchaseOrder> getPurchaseOrdersBySupplier(long supplierId);
+    List<PurchaseOrder> getPurchaseOrdersBySupplier(Long supplierId);
 }

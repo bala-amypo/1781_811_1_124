@@ -1,12 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Supplier;
 import java.util.List;
+import com.example.demo.entity.Supplier;
 
 public interface SupplierService {
+
     Supplier createSupplier(Supplier supplier);
+
     List<Supplier> getAllSuppliers();
-    Supplier getSupplier(Long id);
-    Supplier updateSupplier(Supplier supplier);
-    void deleteSupplier(Long id);
+
+    Supplier getSupplierById(Long id);
+
+    void deactivateSupplier(Long supplierId);
 }
