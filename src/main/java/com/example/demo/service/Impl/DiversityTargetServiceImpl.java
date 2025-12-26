@@ -26,8 +26,13 @@ public class DiversityTargetServiceImpl implements DiversityTargetService {
     public List<DiversityTarget> getActiveTargets() {
         return repository.findAll()
                 .stream()
-                .filter(DiversityTarget::isActive) // uses isActive()
+                .filter(DiversityTarget::isActive)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DiversityTarget> getAllTargets() {
+        return repository.findAll();
     }
 
     @Override
