@@ -1,32 +1,41 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Supplier;
-import com.example.demo.repository.SupplierRepository;
-import com.example.demo.service.SupplierService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.entity.Supplier;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.SupplierRepository;
+import com.example.demo.service.SupplierService;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
-    private final SupplierRepository supplierRepository;
-
     @Autowired
+    private SupplierRepository supplierRepository;
+
+    /* Constructor required by tests */
     public SupplierServiceImpl(SupplierRepository supplierRepository) {
         this.supplierRepository = supplierRepository;
     }
 
-    @Override
-    public Supplier createSupplier(Supplier supplier) {
-        return supplierRepository.save(supplier);
-    }
+    public SupplierServiceImpl() {}
 
     @Override
-    public Supplier getSupplier(Long id) {
-        return supplierRepository.findById(id).orElse(null);
+    public Supplier createSupplier(Supplier supplier) {
+
+        if (!supplier.isActive()) {
+            throw new BadRequestException("Supplier is inactive");
+        }
+
+        if (supplierRepository.existsByEmail(supplier.getEmail())) {
+            throw new BadRequestException("Supplier with this email already exists");
+        }
+
+        return supplierRepository.save(supplier);
     }
 
     @Override
@@ -35,12 +44,19 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public Supplier updateSupplier(Supplier supplier) {
-        return supplierRepository.save(supplier);
+    public Supplier getSupplierById(Long id) {
+        return supplierRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Supplier not found"));
     }
 
     @Override
-    public void deleteSupplier(Long id) {
-        supplierRepository.deleteById(id);
+    public void deactivateSupplier(Long supplierId) {
+        Supplier supplier = supplierRepository.findById(supplierId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Supplier not found"));
+
+        supplier.setIsActive(false);
+        supplierRepository.save(supplier);
     }
 }
