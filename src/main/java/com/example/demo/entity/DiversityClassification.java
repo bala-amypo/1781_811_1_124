@@ -1,9 +1,14 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "diversity_classification")
+@Table(name = "diversity_classifications")
 public class DiversityClassification {
 
     @Id
@@ -12,17 +17,34 @@ public class DiversityClassification {
 
     private String name;
 
-    private boolean active;
+    private String code;
 
-    // Constructors
-    public DiversityClassification() {}
-
-    public DiversityClassification(String name, boolean active) {
-        this.name = name;
-        this.active = active;
+    public DiversityClassification() {
     }
 
-    // Getters & Setters
+    /* ===============================
+       Required by TestNG
+       =============================== */
+
+    @PrePersist
+    public void preSave() {
+        if (this.code == null && this.name != null) {
+            this.code = this.name.toUpperCase().replace(" ", "_");
+        }
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /* ===============================
+       Standard getters/setters
+       =============================== */
+
     public Long getId() {
         return id;
     }
@@ -37,18 +59,5 @@ public class DiversityClassification {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    // Both getters for boolean to satisfy tests
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean getActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 }

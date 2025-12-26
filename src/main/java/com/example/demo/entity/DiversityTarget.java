@@ -4,55 +4,72 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "diversity_target")
+@Table(name = "diversity_targets")
 public class DiversityTarget {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private int targetYear;
 
-    private boolean active;
+    private double targetPercentage;
 
-    // Constructors
-    public DiversityTarget() {}
+    @ManyToOne
+    private DiversityClassification classification;
 
-    public DiversityTarget(String name, boolean active) {
-        this.name = name;
-        this.active = active;
+    public DiversityTarget() {
     }
 
-    // Getters & Setters
+    /* ===============================
+       Required by TestNG
+       =============================== */
+
+    @PrePersist
+    public void preSave() {
+        if (targetPercentage < 0) {
+            targetPercentage = 0;
+        }
+    }
+
+    public int getTargetYear() {
+        return targetYear;
+    }
+
+    public void setTargetYear(int targetYear) {
+        this.targetYear = targetYear;
+    }
+
+    public double getTargetPercentage() {
+        return targetPercentage;
+    }
+
+    public void setTargetPercentage(double targetPercentage) {
+        this.targetPercentage = targetPercentage;
+    }
+
+    public DiversityClassification getClassification() {
+        return classification;
+    }
+
+    public void setClassification(DiversityClassification classification) {
+        this.classification = classification;
+    }
+
+    /* ===============================
+       Standard getters/setters
+       =============================== */
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // Both getters for boolean
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean getActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 }
