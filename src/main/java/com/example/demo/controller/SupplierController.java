@@ -17,17 +17,17 @@ public class SupplierController {
     }
 
     @PostMapping
-    public Supplier create(@RequestBody Supplier supplier) {
+    public Supplier createSupplier(@RequestBody Supplier supplier) {
         return service.createSupplier(supplier);
     }
 
     @GetMapping
-    public List<Supplier> getAll() {
+    public List<Supplier> getAllSuppliers() {
         return service.getAllSuppliers();
     }
 
     @GetMapping("/{id}")
-    public Supplier get(@PathVariable Long id) {
+    public Supplier getSupplier(@PathVariable Long id) {
         return service.getSupplier(id);
     }
 }

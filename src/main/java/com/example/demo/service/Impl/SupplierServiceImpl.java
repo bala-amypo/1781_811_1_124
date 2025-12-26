@@ -10,45 +10,44 @@ import java.util.List;
 @Service
 public class SupplierServiceImpl implements SupplierService {
 
-    private final SupplierRepository repo;
+    private final SupplierRepository repository;
 
-    public SupplierServiceImpl(SupplierRepository repo) {
-        this.repo = repo;
+    public SupplierServiceImpl(SupplierRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Supplier createSupplier(Supplier supplier) {
-        return repo.save(supplier);
+        return repository.save(supplier);
     }
 
     @Override
     public List<Supplier> getAllSuppliers() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Supplier getSupplier(Long id) {
-        return repo.findById(id).orElse(null);
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Supplier not found"));
     }
 
     @Override
     public Supplier updateSupplier(Long id, Supplier supplier) {
-        supplier.setId(id);
-        return repo.save(supplier);
+        Supplier existing = getSupplier(id);
+        existing.setName(supplier.getName());
+        return repository.save(existing);
     }
 
     @Override
     public Supplier deactivateSupplier(Long id) {
-        Supplier supplier = repo.findById(id).orElse(null);
-        if (supplier != null) {
-            supplier.setActive(false);
-            return repo.save(supplier);
-        }
-        return null;
+        Supplier supplier = getSupplier(id);
+        supplier.setIsActive(false);
+        return repository.save(supplier);
     }
 
     @Override
     public void deleteSupplier(Long id) {
-        repo.deleteById(id);
+        repository.deleteById(id);
     }
 }

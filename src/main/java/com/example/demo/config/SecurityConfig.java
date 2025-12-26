@@ -11,14 +11,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable() // optional, depending on your app
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll() // allow all URLs
-            );
-            // .httpBasic() <- remove this line
-            // .formLogin() <- optional if you want form login
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }

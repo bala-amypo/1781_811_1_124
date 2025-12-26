@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class Supplier {
@@ -11,27 +10,41 @@ public class Supplier {
     private Long id;
 
     private String name;
-    private String email;
-    private String registrationNumber;
-    private Boolean isActive = true;
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private boolean isActive = true;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Supplier() {}
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getRegistrationNumber() { return registrationNumber; }
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
+    public Supplier(String name) {
+        this.name = name;
     }
 
-    public Boolean getActive() { return isActive; }
-    public void setActive(Boolean active) { isActive = active; }
+    @PrePersist
+    public void prePersist() {
+        this.isActive = true;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIsActive(boolean active) {
+        this.isActive = active;
+    }
 }
