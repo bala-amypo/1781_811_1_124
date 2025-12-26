@@ -15,12 +15,12 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public Supplier getSupplierById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
-
-    @Override
-    public void deleteSupplier(Long id) {
-        repo.deleteById(id);
+    public Supplier deactivateSupplier(Long id) {
+        Supplier supplier = repo.findById(id).orElse(null);
+        if (supplier != null) {
+            supplier.setActive(false);
+            return repo.save(supplier);
+        }
+        return null;
     }
 }

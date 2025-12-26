@@ -17,12 +17,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public PurchaseOrder create(PurchaseOrder order) {
-        return repo.save(order);
-    }
-
-    // helper method (NOT in interface)
-    public List<PurchaseOrder> getOrdersBySupplier(Long supplierId) {
+    public List<PurchaseOrder> getOrdersByCategory(Long categoryId) {
         return repo.findAll();
     }
 }
