@@ -1,40 +1,20 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class DiversityTarget {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    private int targetYear;
-    private double targetPercentage;
-    private Boolean isActive = true;
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    private DiversityClassification classification;
+    public DiversityTarget() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public int getTargetYear() { return targetYear; }
-    public void setTargetYear(int targetYear) { this.targetYear = targetYear; }
-
-    public double getTargetPercentage() { return targetPercentage; }
-    public void setTargetPercentage(double targetPercentage) {
-        this.targetPercentage = targetPercentage;
+    public void preSave() {
+        createdAt = LocalDateTime.now();
     }
-
-    public DiversityClassification getClassification() {
-        return classification;
-    }
-
-    public void setClassification(DiversityClassification classification) {
-        this.classification = classification;
-    }
-
-    public Boolean getActive() { return isActive; }
-    public void setActive(Boolean active) { isActive = active; }
 }

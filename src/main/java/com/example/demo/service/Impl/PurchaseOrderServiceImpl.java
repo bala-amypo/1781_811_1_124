@@ -2,32 +2,29 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.PurchaseOrder;
 import com.example.demo.repository.PurchaseOrderRepository;
+import com.example.demo.repository.SupplierRepository;
+import com.example.demo.repository.SpendCategoryRepository;
 import com.example.demo.service.PurchaseOrderService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
-    private final PurchaseOrderRepository repo;
+    private final PurchaseOrderRepository poRepo;
 
-    public PurchaseOrderServiceImpl(PurchaseOrderRepository repo) {
-        this.repo = repo;
+    public PurchaseOrderServiceImpl(
+            PurchaseOrderRepository poRepo,
+            SupplierRepository supplierRepo,
+            SpendCategoryRepository categoryRepo
+    ) {
+        this.poRepo = poRepo;
     }
 
-    @Override
-    public PurchaseOrder create(PurchaseOrder order) {
-        return repo.save(order);
+    public PurchaseOrder createPurchaseOrder(PurchaseOrder po) {
+        return poRepo.save(po);
     }
 
-    @Override
-    public List<PurchaseOrder> getOrdersBySupplier(Long supplierId) {
-        return repo.findAll();
-    }
-
-    @Override
-    public List<PurchaseOrder> getOrdersByCategory(Long categoryId) {
-        return repo.findAll();
+    public List<PurchaseOrder> getPurchaseOrdersBySupplier(long supplierId) {
+        return poRepo.findAll();
     }
 }
