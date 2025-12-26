@@ -6,5 +6,5 @@ import java.util.List;
 public interface SupplierService {
     Supplier createSupplier(Supplier supplier);
     List<Supplier> getAllSuppliers();
-    Supplier getSupplierById(long id);
+    Supplier getSupplier(Long id); // renamed from getSupplierById
 }

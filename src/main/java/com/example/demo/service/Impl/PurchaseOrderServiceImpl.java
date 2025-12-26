@@ -20,10 +20,17 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         this.poRepo = poRepo;
     }
 
-    public PurchaseOrder createPurchaseOrder(PurchaseOrder po) {
+    @Override
+    public PurchaseOrder create(PurchaseOrder po) {
         return poRepo.save(po);
     }
 
+    @Override
+    public List<PurchaseOrder> getOrdersByCategory(Long categoryId) {
+        return poRepo.findAll(); // stub, enough to compile
+    }
+
+    @Override
     public List<PurchaseOrder> getPurchaseOrdersBySupplier(long supplierId) {
         return poRepo.findAll();
     }
