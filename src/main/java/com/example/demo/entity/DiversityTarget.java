@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "diversity_target")
 public class DiversityTarget {
 
     @Id
@@ -11,15 +12,43 @@ public class DiversityTarget {
 
     private String name;
 
-    private boolean active = true;
+    private boolean active;
 
-    // Getter & Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Constructors
+    public DiversityTarget() {}
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public DiversityTarget(String name, boolean active) {
+        this.name = name;
+        this.active = active;
+    }
 
-    public boolean getActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Both getters for boolean
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

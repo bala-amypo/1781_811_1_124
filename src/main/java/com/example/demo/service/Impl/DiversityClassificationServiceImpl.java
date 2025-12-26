@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.DiversityClassification;
 import com.example.demo.repository.DiversityClassificationRepository;
 import com.example.demo.service.DiversityClassificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
 
     private final DiversityClassificationRepository repository;
 
-    @Autowired
     public DiversityClassificationServiceImpl(DiversityClassificationRepository repository) {
         this.repository = repository;
     }
@@ -39,8 +37,7 @@ public class DiversityClassificationServiceImpl implements DiversityClassificati
 
     @Override
     public DiversityClassification deleteClassification(Long id) {
-        DiversityClassification classification = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Classification not found"));
+        DiversityClassification classification = repository.findById(id).orElseThrow();
         repository.delete(classification);
         return classification;
     }
