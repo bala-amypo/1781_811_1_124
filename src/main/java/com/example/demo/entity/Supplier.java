@@ -32,14 +32,14 @@ public class Supplier {
 
     public Supplier() {}
 
-    /* ===== Lifecycle ===== */
+    
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.active = true;
     }
 
-    /* ===== Legacy methods REQUIRED by tests ===== */
+  
     public boolean getIsActive() {
         return active;
     }
