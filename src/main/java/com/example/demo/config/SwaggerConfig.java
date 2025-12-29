@@ -22,7 +22,7 @@ public class SwaggerConfig {
                 // ✅ Server URL
                 .servers(List.of(
                         new Server()
-                                .url("https://9374.pro604cr.amypo.ai")
+                                .url("https://9374.pro604cr.amypo.ai/")
                                 .description("Production Server")
                 ))
 
